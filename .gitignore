@@ -51,3 +51,11 @@ kotlin-ide/
 
 # general exception for asset folders
 !assets/
+/hs_err_pid4584.log
+/hs_err_pid5788.log
+/hs_err_pid29796.log
+/hs_err_pid33432.log
+/hs_err_pid34592.log
+/hs_err_pid35756.log
+/hs_err_pid40544.log
+/build.gradle
