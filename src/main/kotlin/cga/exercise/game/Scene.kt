@@ -18,7 +18,7 @@ class Scene(private val window: GameWindow) {
     init {
         glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
 
-        enableDepthTest(GL_LESS)
+//        enableDepthTest(GL_LESS)
         enableFaceCulling(GL_CCW, GL_BACK)
 
 /*      //Aufg 1.2.3: Gerendertes Haus
