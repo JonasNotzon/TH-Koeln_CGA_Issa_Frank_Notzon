@@ -7,9 +7,7 @@ import cga.framework.GLError
 import cga.framework.GameWindow
 import org.lwjgl.opengl.GL30.*
 
-/**
- * Created 29.03.2023.
- */
+
 class Scene(private val window: GameWindow) {
     private val staticShader: ShaderProgram =
         ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
