@@ -19,8 +19,9 @@ class Scene(private val window: GameWindow) {
         glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
 
 //        enableDepthTest(GL_LESS)
-//        enableFaceCulling(GL_CCW, GL_BACK)
+        enableFaceCulling(GL_CCW, GL_BACK)
 
+/*      //Aufg 1.2.3: Gerendertes Haus
         val vertices = floatArrayOf(
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
@@ -33,6 +34,36 @@ class Scene(private val window: GameWindow) {
             0, 1, 2,
             0, 2, 4,
             4, 2, 3
+        )*/
+
+
+        //Aufg 1.2.5: Initialen
+        val vertices = floatArrayOf(
+            //I
+            0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.25f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            //L
+            0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.0f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.75f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+        )
+        val indices = intArrayOf(
+            //I
+            0,1,2,
+            0,2,3,
+            //L
+            3,4,2,
+            4,5,3,
+            5,7,4,
+            5,6,7,
+            8,10,7,
+            10,8,9
         )
 
         val pos = VertexAttribute(3, GL_FLOAT, 24, 0)
