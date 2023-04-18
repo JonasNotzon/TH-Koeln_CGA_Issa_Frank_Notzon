@@ -17,7 +17,8 @@ class Scene(private val window: GameWindow) {
     private val mesh: Mesh
 
     init {
-        glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
+//        glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
 
         enableDepthTest(GL_LESS)
         enableFaceCulling(GL_CCW, GL_BACK)
