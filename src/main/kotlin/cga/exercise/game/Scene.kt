@@ -17,10 +17,10 @@ class Scene(private val window: GameWindow) {
     private val mesh: Mesh
 
     init {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
-//        glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
+//        glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
+        glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
 
-        enableDepthTest(GL_LESS)
+//        enableDepthTest(GL_LESS)
         enableFaceCulling(GL_CCW, GL_BACK)
 
 /*      //Aufg 1.2.3: Gerendertes Haus
@@ -40,33 +40,33 @@ class Scene(private val window: GameWindow) {
 
 
         //Aufg 1.2.5: Initialen
-//        val vertices = floatArrayOf(
-//            //I
-//            0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            0.25f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-//            //L
-//            0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            0.0f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            -0.5f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            -0.75f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-//            -0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
-//        )
-//        val indices = intArrayOf(
-//            //I
-//            0,1,2,
-//            0,2,3,
-//            //L
-//            3,4,2,
-//            4,5,3,
-//            5,7,4,
-//            5,6,7,
-//            8,10,7,
-//            10,8,9
-//        )
+        val vertices = floatArrayOf(
+            //I
+            0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.25f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            //L
+            0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            0.0f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.75f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+            -0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+        )
+        val indices = intArrayOf(
+            //I
+            0,1,2,
+            0,2,3,
+            //L
+            3,4,2,
+            4,5,3,
+            5,7,4,
+            5,6,7,
+            8,10,7,
+            10,8,9
+        )
 
 //        Aufg 1.2.4: Initialen: JN
 //        val vertices = floatArrayOf(
@@ -115,20 +115,19 @@ class Scene(private val window: GameWindow) {
 //            15, 20, 16
 //        )
 
-        val sphereMeshList =
-            loadOBJ(System.getProperty("user.dir") + "\\assets\\models\\sphere.obj").objects[0].meshes[0]
-        val vertices = sphereMeshList.vertexData
-        val indices = sphereMeshList.indexData
+//        val sphereMeshList = loadOBJ("assets/models/sphere.obj").objects[0].meshes[0]
+//        val vertices = sphereMeshList.vertexData
+//        val indices = sphereMeshList.indexData
 
-//        val pos = VertexAttribute(3, GL_FLOAT, 24, 0)
-//        val col = VertexAttribute(3, GL_FLOAT, 24, 12)
-//        val vertexAttributes = arrayOf<VertexAttribute>(pos, col)
+        val pos = VertexAttribute(3, GL_FLOAT, 24, 0)
+        val col = VertexAttribute(3, GL_FLOAT, 24, 12)
+        val vertexAttributes = arrayOf<VertexAttribute>(pos, col)
 
 //        Aufg 1.3.1
-        val pos = VertexAttribute(3, GL_FLOAT, 8 * 4, 0)
-        val tex = VertexAttribute(2, GL_FLOAT, 8 * 4, 3 * 4)
-        val col = VertexAttribute(3, GL_FLOAT, 8 * 4, 5 * 4)
-        val vertexAttributes = arrayOf<VertexAttribute>(pos, tex, col)
+//        val pos = VertexAttribute(3, GL_FLOAT, 8 * 4, 0)
+//        val tex = VertexAttribute(2, GL_FLOAT, 8 * 4, 3 * 4)
+//        val col = VertexAttribute(3, GL_FLOAT, 8 * 4, 5 * 4)
+//        val vertexAttributes = arrayOf<VertexAttribute>(pos, tex, col)
 
         mesh = Mesh(vertices, indices, vertexAttributes)
     }
