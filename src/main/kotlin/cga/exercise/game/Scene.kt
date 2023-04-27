@@ -6,136 +6,55 @@ import cga.exercise.components.shader.ShaderProgram
 import cga.framework.GLError
 import cga.framework.GameWindow
 import cga.framework.OBJLoader.loadOBJ
+import org.joml.Matrix4f
+import org.joml.Vector3f
 import org.lwjgl.opengl.GL30.*
 
-/**
- * Created 29.03.2023.
- */
+
 class Scene(private val window: GameWindow) {
     private val staticShader: ShaderProgram =
-        ShaderProgram("assets/shaders/simple_vert.glsl", "assets/shaders/simple_frag.glsl")
-    private val mesh: Mesh
+        ShaderProgram("assets/shaders/tron_vert.glsl", "assets/shaders/tron_frag.glsl")
+    private val sphereMesh: Mesh
+    private val groundMesh: Mesh
+
+    private val sphereMatrix = Matrix4f()
+    private val groundMatrix = Matrix4f()
 
     init {
-//        glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
-        glClearColor(0.0f, 0.533f, 1.0f, 1.0f); GLError.checkThrow()
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GLError.checkThrow()
 
-//        enableDepthTest(GL_LESS)
+        enableDepthTest(GL_LESS)
         enableFaceCulling(GL_CCW, GL_BACK)
 
-/*      //Aufg 1.2.3: Gerendertes Haus
-        val vertices = floatArrayOf(
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f
-        )
+        val pos = VertexAttribute(3, GL_FLOAT, 8 * 4, 0)
+        val tex = VertexAttribute(2, GL_FLOAT, 8 * 4, 3 * 4)
+        val col = VertexAttribute(3, GL_FLOAT, 8 * 4, 5 * 4)
+        val vertexAttributes = arrayOf<VertexAttribute>(pos, tex, col)
 
-        val indices = intArrayOf(
-            0, 1, 2,
-            0, 2, 4,
-            4, 2, 3
-        )*/
+//      Aufg. 2.1.1
+        val sphereMeshList = loadOBJ("assets/models/sphere.obj").objects[0].meshes[0]
+        val sphereVertices = sphereMeshList.vertexData
+        val sphereIndices = sphereMeshList.indexData
+        sphereMesh = Mesh(sphereVertices, sphereIndices, vertexAttributes)
+        sphereMatrix
+            .scale(0.5f)
 
-
-        //Aufg 1.2.5: Initialen
-        val vertices = floatArrayOf(
-            //I
-            0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            0.25f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            0.25f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            //L
-            0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            0.0f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
-            -0.5f, 0.25f, 0.0f, 0.0f, 0.5f, 0.0f,
-            -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            -0.75f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,
-            -0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f
-        )
-        val indices = intArrayOf(
-            //I
-            0,1,2,
-            0,2,3,
-            //L
-            3,4,2,
-            4,5,3,
-            5,7,4,
-            5,6,7,
-            8,10,7,
-            10,8,9
-        )
-
-//        Aufg 1.2.4: Initialen: JN
-//        val vertices = floatArrayOf(
-//            //J
-//            -0.7f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,  //0
-//            -0.7f, 0.5f, 0.0f, 0.2f, 0.0f, 1.0f,  //1
-//            -0.3f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,  //2
-//            -0.3f, 0.5f, 0.0f, 0.2f, 0.0f, 1.0f,  //3
-//            -0.4f, 0.5f, 0.0f, 0.2f, 0.0f, 1.0f,  //4
-//            -0.3f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f, //5
-//            -0.7f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f, //6
-//            -0.7f, -0.5f, 0.0f, 0.2f, 0.0f, 1.0f, //7
-//            -0.7f, -0.3f, 0.0f, 0.2f, 0.0f, 1.0f, //8
-//            -0.6f, -0.3f, 0.0f, 0.2f, 0.0f, 1.0f, //9
-//            -0.6f, -0.5f, 0.0f, 0.2f, 0.0f, 1.0f, //10
-//            -0.4f, -0.5f, 0.0f, 0.2f, 0.0f, 1.0f, //11
-//            -0.3f, -0.5f, 0.0f, 0.2f, 0.0f, 1.0f, //12
-//            //N
-//            0.2f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,   //13
-//            0.3f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,   //14
-//            0.8f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,   //15
-//            0.9f, 0.7f, 0.0f, 0.2f, 0.0f, 1.0f,   //16
-//            0.2f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f,  //17
-//            0.3f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f,  //18
-//            0.8f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f,  //19
-//            0.9f, -0.7f, 0.0f, 0.2f, 0.0f, 1.0f   //20
-//        )
-//
-//        val indices = intArrayOf(
-//            //J
-//            0, 1, 2,
-//            2, 1, 3,
-//            4, 12, 3,
-//            4, 11, 12,
-//            6, 5, 12,
-//            7, 6, 12,
-//            8, 7, 10,
-//            8, 10, 9,
-//            8, 10, 9,
-//            //N
-//            13, 17, 14,
-//            14, 17, 18,
-//            13, 19, 20,
-//            13, 20, 14,
-//            15, 19, 20,
-//            15, 20, 16
-//        )
-
-//        val sphereMeshList = loadOBJ("assets/models/sphere.obj").objects[0].meshes[0]
-//        val vertices = sphereMeshList.vertexData
-//        val indices = sphereMeshList.indexData
-
-        val pos = VertexAttribute(3, GL_FLOAT, 24, 0)
-        val col = VertexAttribute(3, GL_FLOAT, 24, 12)
-        val vertexAttributes = arrayOf<VertexAttribute>(pos, col)
-
-//        Aufg 1.3.1
-//        val pos = VertexAttribute(3, GL_FLOAT, 8 * 4, 0)
-//        val tex = VertexAttribute(2, GL_FLOAT, 8 * 4, 3 * 4)
-//        val col = VertexAttribute(3, GL_FLOAT, 8 * 4, 5 * 4)
-//        val vertexAttributes = arrayOf<VertexAttribute>(pos, tex, col)
-
-        mesh = Mesh(vertices, indices, vertexAttributes)
+        val groundMeshList = loadOBJ("assets/models/ground.obj").objects[0].meshes[0]
+        val groundVertices = groundMeshList.vertexData
+        val groundIndices = groundMeshList.indexData
+        groundMesh = Mesh(groundVertices, groundIndices, vertexAttributes)
+        groundMatrix
+            .rotation(90f, Vector3f(1f, 0f, 0f))
+            .scale(0.03f)
     }
 
     fun render(dt: Float, t: Float) {
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         staticShader.use()
-        mesh.render()
+        staticShader.setUniform("model_matrix", sphereMatrix)
+        sphereMesh.render()
+        staticShader.setUniform("model_matrix", groundMatrix)
+        groundMesh.render()
     }
 
     fun update(dt: Float, t: Float) {}
@@ -145,7 +64,8 @@ class Scene(private val window: GameWindow) {
     fun onMouseMove(xpos: Double, ypos: Double) {}
 
     fun cleanup() {
-        mesh.cleanup()
+        sphereMesh.cleanup()
+        groundMesh.cleanup()
     }
 
     /**

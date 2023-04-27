@@ -4,7 +4,6 @@ import org.joml.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
-import org.lwjgl.opengl.GL30
 import java.nio.FloatBuffer
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -45,6 +44,24 @@ class ShaderProgram(vertexShaderPath: String, fragmentShaderPath: String) {
         val loc = GL20.glGetUniformLocation(programID, name)
         if (loc != -1) {
             GL20.glUniform1f(loc, value)
+            return true
+        }
+        return false
+    }
+
+    // ------------------------ Matrix4vf uniforms -------------------------
+    /**
+     * Sets a single float uniform
+     * @param name  Name of the uniform variable in the shader
+     * @param value Matrix4f
+     * @param transpose Boolean
+     * @return returns false if the uniform was not found in the shader
+     */
+    fun setUniform(name: String, value: Matrix4f, transpose: Boolean = false): Boolean {
+        if (programID == 0) return false
+        val loc = GL20.glGetUniformLocation(programID, name)
+        if (loc != -1) {
+            GL20.glUniformMatrix4fv(loc, transpose, value.get(m4x4buf))
             return true
         }
         return false
